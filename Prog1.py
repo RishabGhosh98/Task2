@@ -1,3 +1,5 @@
+# QOSF Task No. 2 possible approach of mine for it
+
 import pennylane as qml
 from pennylane.templates import BasicEntanglerLayers
 from pennylane.templates import StronglyEntanglingLayers
