@@ -53,8 +53,6 @@ def cost(params):
     return cost
 
 # %% CROSS VALIDATION ON N_LAYERS
-# Here we just run the optimization using AdamOptimizer
-# iterating over the number of layers, for a fixed n_gates per layer = 6 gates
 
 errors_n_layers = []
 steps = 100
@@ -70,7 +68,7 @@ plt.title('Cross Val on n_layers for fixed 6 gates per layer')
 # Looking at the graph, we see that 20 layers is optimal
 
 # %% CROSS VALIDATION ON N_GATES
-# Likewise, we optimize by iterating on the number of gates per layer, for fixed 20 layers
+# optimization by iterating on the number of gates per layer, for fixed 20 layers
 # as per the result from the n_layer optimization
 errors_n_gates = []
 steps = 100
@@ -97,26 +95,11 @@ plt.title('Cross Val on n_gates for fixed 20 layers')
 
 # Looking at the graph, we see that 6 gates is indeed optimal
 
-# Yes, i know this seems a bit prefabricated with optimizing n_layers on 6 gates and then 
-# finding n_gates = 6 gates by optimizing with fixed 20 layers. Tbf, this was done by trial and error.
-
-# Ideally, this cross validation should've been done over the two parameters, finding 
-# some minimum of a 3D graph.
-
 # %% FINAL RESULTS: COST AND CIRCUIT
 
 print('\n\n Through cross validation (see graphs), we found that the optimal circuit has around 20 layers of 6 gates each (at least on the random seed chosen for the Random entangling layers in the circuit)\n')
 print('We collect the final results here: \n')
 
-# It is worth mentioning that i also played around with basic and strong entangling
-# layers, but the random entangling layers seemed to give me the best results
-
-opt = qml.AdamOptimizer(stepsize=0.3)
-steps = 100
-np.random.seed(2) 
-# I did also find that seed=2 gave the best results, 
-# but in principle this doesnt change much (for this case) so any seed will give small error.
-params = np.random.randint(0,4,(20,6))*1.0
 
 for i in range(steps):
     params = opt.step(cost, params)
